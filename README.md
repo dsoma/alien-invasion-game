@@ -1,2 +1,2 @@
 # alien-invasion-game
-Game written in Python
+Game written in Python. This is a fun project to learn and practice Python.
