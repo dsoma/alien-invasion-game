@@ -10,7 +10,7 @@ class Ship:
         self.settings = game.settings
 
         # load the ship image
-        self.image  = pygame.image.load('images/ship_sky_blue.bmp')
+        self.image  = pygame.image.load(self.settings.ship.image)
         self.rect   = self.image.get_rect()
         self.width  = self.rect.width
         self.height = self.rect.height
@@ -32,10 +32,10 @@ class Ship:
     def update(self):
         """Update the ship's position."""
         if self.moving_right:
-            self.x += self.settings.speed * self.settings.step_size
+            self.x += self.settings.ship.speed * self.settings.ship.step_size
             self.x  = min(self.x, self.screen_rect.right - self.width)
         if self.moving_left:
-            self.x -= self.settings.speed * self.settings.step_size
+            self.x -= self.settings.ship.speed * self.settings.ship.step_size
             self.x  = max(self.x, 0)
 
         self.rect.x = self.x
