@@ -9,7 +9,7 @@ class Ship:
         self.screen_rect = game.screen.get_rect()
 
         # load the ship image
-        self.image = pygame.image.load('images/ship.bmp')
+        self.image = pygame.image.load('images/ship_sky_blue.bmp')
         self.rect = self.image.get_rect()
 
         # Place the ship at the bottom center of the screen
