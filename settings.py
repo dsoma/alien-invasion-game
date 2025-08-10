@@ -19,6 +19,7 @@ class ShipSettings:
         self.step_size = 3
         self.image = 'images/ship_sky_blue.bmp'
 
+
 class ScreenSettings:
     """Settings for the screen."""
 
@@ -30,6 +31,16 @@ class ScreenSettings:
         self.framerate = 60
 
 
+class AlienSettings:
+    """Settings for the aliens."""
+
+    def __init__(self):
+        """Initialize the alien settings."""
+        self.speed = 1.0
+        self.direction = 1
+        self.image = 'images/alien_red.bmp'
+
+
 class Settings:
     """A class to store all settings for Alien Invasion."""
 
@@ -38,3 +49,4 @@ class Settings:
         self.screen = ScreenSettings()
         self.ship   = ShipSettings()
         self.bullet = BulletSettings()
+        self.alien  = AlienSettings()
