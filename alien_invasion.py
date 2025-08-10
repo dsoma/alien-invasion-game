@@ -12,28 +12,35 @@ class AlienInvasion:
         pygame.init()
         self.clock = pygame.time.Clock()
         self.settings = Settings()
-
-        self.screen = pygame.display.set_mode((
-            self.settings.screen_width,
-            self.settings.screen_height
-        ))
-        pygame.display.set_caption('Alien Invasion')
-
+        self._create_window()
         self.ship = Ship(self)
 
     def run(self):
         """Start the main executor for the game."""
-        running = True
-        while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                    sys.exit()
-
-            self.screen.fill(self.settings.bg_color)
-            self.ship.draw()
-            pygame.display.flip()
+        while True:
+            self._check_events()
+            self._render_screen()
             self.clock.tick(self.settings.framerate)
+
+    def _create_window(self):
+        """Create the game window."""
+        pygame.display.set_caption('Alien Invasion')
+        self.screen = pygame.display.set_mode((
+            self.settings.screen_width,
+            self.settings.screen_height
+        ))
+
+    def _check_events(self):
+        """Respond to keypresses and mouse events."""
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+
+    def _render_screen(self):
+        """Render the screen."""
+        self.screen.fill(self.settings.bg_color)
+        self.ship.draw()
+        pygame.display.flip()
 
 if __name__ == "__main__":
     game = AlienInvasion()
