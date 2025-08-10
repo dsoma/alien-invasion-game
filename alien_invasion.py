@@ -12,7 +12,7 @@ class AlienInvasion:
         pygame.init()
         self.clock = pygame.time.Clock()
         self.settings = Settings()
-        self._create_window()
+        self._create_fullscreen_window()
         self.ship = Ship(self)
 
 
@@ -25,7 +25,15 @@ class AlienInvasion:
             self.clock.tick(self.settings.framerate)
 
 
-    def _create_window(self):
+    def _create_fullscreen_window(self):
+        """Create the game window."""
+        pygame.display.set_caption('Alien Invasion')
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        self.settings.screen_width  = self.screen.get_rect().width
+        self.settings.screen_height = self.screen.get_rect().height
+
+
+    def _create_normal_window(self):
         """Create the game window."""
         pygame.display.set_caption('Alien Invasion')
         self.screen = pygame.display.set_mode((
