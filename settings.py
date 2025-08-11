@@ -37,8 +37,9 @@ class AlienSettings:
     def __init__(self):
         """Initialize the alien settings."""
         self.speed = 1.0
-        self.direction = 1
+        self.direction = 1 # 1 means right; -1 means left
         self.image = 'images/alien_1.bmp'
+        self.drop_speed = 1.0
 
 
 class Settings:
