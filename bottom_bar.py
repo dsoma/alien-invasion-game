@@ -14,6 +14,7 @@ class BottomBar:
         self.height = 100
         self.color = (0, 0, 0)
         self.MARGIN = 50
+        self.LABEL_WIDTH = 300
 
         self.rect = pygame.Rect(0, 0, self.width, self.height)
         self.rect.bottom = self.screen_rect.bottom
@@ -25,6 +26,7 @@ class BottomBar:
         self.level_label = Label(self.screen,
                                  f'Level: {self.game.stats.level}',
                                  level_label_color,
+                                 self.LABEL_WIDTH,
                                  level_label_left_x,
                                  level_label_center_y)
 
@@ -35,6 +37,7 @@ class BottomBar:
         self.score_label = Label(self.screen,
                                  f'Score: {self.game.stats.score}',
                                  score_label_color,
+                                 self.LABEL_WIDTH,
                                  score_label_left_x,
                                  score_label_center_y)
 
@@ -45,6 +48,7 @@ class BottomBar:
         self.high_score_label = Label(self.screen,
                                       f'High Score: {self.game.stats.high_score}',
                                       high_score_label_color,
+                                      self.LABEL_WIDTH,
                                       high_score_label_left_x,
                                       high_score_label_center_y)
 
@@ -56,6 +60,7 @@ class BottomBar:
         self.ships_left_label = Label(self.screen,
                                       f'Ships Left: {self.game.stats.ships_left}',
                                       ships_left_label_color,
+                                      self.LABEL_WIDTH,
                                       ships_left_label_left_x,
                                       ships_left_label_center_y)
 
@@ -71,6 +76,6 @@ class BottomBar:
     def update(self):
         """Update the bottom bar."""
         self.level_label.set_text(f'Level: {self.game.stats.level}')
-        self.score_label.set_text(f'Score: {self.game.stats.score}')
-        self.high_score_label.set_text(f'High Score: {self.game.stats.high_score}')
+        self.score_label.set_text(f'Score: {self.game.stats.score:,}')
+        self.high_score_label.set_text(f'High Score: {self.game.stats.high_score:,}')
         self.ships_left_label.set_text(f'Ships Left: {self.game.stats.ships_left}')

@@ -56,7 +56,8 @@ class AlienFleet(Sprite):
         self._check_fleet_edges()
         self.aliens.update()
         self._check_if_hit_ship()
-        self._did_aliens_reach_bottom(self.play_area_rect)
+        if self._did_aliens_reach_bottom(self.play_area_rect):
+            self.game.aliens_hit_bottom()
 
 
     def clear(self):
@@ -95,7 +96,8 @@ class AlienFleet(Sprite):
         """Did the aliens in the group reached the bottom of the screen"""
         for alien in self.aliens.sprites():
             if alien.rect.bottom >= play_area_rect.bottom:
-                self.game.aliens_hit_bottom()
+                return True
+        return False
 
 
 class Alien(Sprite):
