@@ -8,6 +8,7 @@ from bullet import BulletGroup
 from alien import AlienFleet
 from stats import Stats
 from button import Button
+from bottom_bar import BottomBar
 
 class AlienInvasion:
     """Overall class to manage game assets and behavior."""
@@ -18,8 +19,9 @@ class AlienInvasion:
         self.game_in_progress = False
         self.clock = pygame.time.Clock()
         self.settings = Settings()
-        self._create_fullscreen_window()
         self.stats = Stats(self)
+        self._create_fullscreen_window()
+        self.bottom_bar = BottomBar(self)
         self.play_button = Button(self, "Play")
         self.ship = Ship(self)
         self.bullets = BulletGroup(self)
@@ -35,8 +37,9 @@ class AlienInvasion:
             if self.game_in_progress:
                 self.ship.update()
                 self.bullets.update()
-                self._recreate_fleet_if_empty()
+                self._level_up_if_win()
                 self.aliens.update()
+                self.bottom_bar.update()
 
             self._render_screen()
             self.clock.tick(self.settings.screen.framerate)
@@ -83,6 +86,7 @@ class AlienInvasion:
             self.ship.draw()
             self.bullets.draw()
             self.aliens.draw()
+            self.bottom_bar.draw()
 
         pygame.display.flip()
 
@@ -119,6 +123,7 @@ class AlienInvasion:
     def _start_game(self):
         """Start a new game."""
         self.stats.reset_stats()
+        self.settings.reset_settings()
         self.game_in_progress = True
         self.aliens.clear()
         self.bullets.clear()
@@ -126,6 +131,15 @@ class AlienInvasion:
         self.ship.center_ship()
         # Hide the mouse cursor.
         pygame.mouse.set_visible(False)
+
+
+    def _level_up_if_win(self):
+        """Level up if the player wins."""
+        # If aliens are killed, first change the settings
+        # and then recreate the fleet.
+        if self.aliens.is_empty():
+            self._level_up_settings()
+            self._recreate_fleet_if_empty()
 
     def _create_fleet(self):
         """Create the fleet of aliens."""
@@ -152,16 +166,21 @@ class AlienInvasion:
             self.ship.center_ship()
 
             sleep(1.0)
-
         else:
             self.game_over()
-
 
 
     def aliens_hit_bottom(self):
         """One of the aliens has reached the bottom of the screen."""
         # The game behavior is same as when the ship is hit by an alien.
         self.ship_hit()
+
+
+    def _level_up_settings(self):
+        """Level up the settings."""
+        # Increase the level and the game speed.
+        self.stats.level += 1
+        self.settings.level_up(self.stats.level)
 
 
     def game_over(self):

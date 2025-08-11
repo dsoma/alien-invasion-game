@@ -12,8 +12,13 @@ class AlienFleet(Sprite):
         self.settings = game.settings
         self.aliens = pygame.sprite.Group()
         self.ship = game.ship
+        self.bottom_bar = game.bottom_bar
         self.screen_width  = self.screen.get_rect().width
         self.screen_height = self.screen.get_rect().height
+
+        self.play_area_height = self.screen_height - self.bottom_bar.rect.height
+        self.play_area_width  = self.screen_width
+        self.play_area_rect   = pygame.Rect(0, 0, self.play_area_width, self.play_area_height)
 
 
     def build(self):
@@ -23,8 +28,9 @@ class AlienFleet(Sprite):
         x, y = alien_width, alien_height
         alien.x = alien_width
 
-        while y < (self.screen_height - 3 * alien_height):
-            while x < (self.screen_width - 2 * alien_width):
+
+        while y < (self.play_area_height - 3 * alien_height):
+            while x < (self.play_area_width - 2 * alien_width):
                 self._create_alien(x, y)
                 x += 2 * alien_width
 
@@ -50,7 +56,7 @@ class AlienFleet(Sprite):
         self._check_fleet_edges()
         self.aliens.update()
         self._check_if_hit_ship()
-        self._did_aliens_reach_bottom(self.screen.get_rect())
+        self._did_aliens_reach_bottom(self.play_area_rect)
 
 
     def clear(self):
@@ -85,10 +91,10 @@ class AlienFleet(Sprite):
             self.game.ship_hit()
 
 
-    def _did_aliens_reach_bottom(self, screen_rect):
+    def _did_aliens_reach_bottom(self, play_area_rect):
         """Did the aliens in the group reached the bottom of the screen"""
         for alien in self.aliens.sprites():
-            if alien.rect.bottom >= screen_rect.bottom:
+            if alien.rect.bottom >= play_area_rect.bottom:
                 self.game.aliens_hit_bottom()
 
 

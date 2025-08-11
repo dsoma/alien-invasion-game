@@ -8,6 +8,7 @@ class Ship:
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect()
         self.settings = game.settings
+        self.bottom_bar = game.bottom_bar
 
         # load the ship image
         self.image  = pygame.image.load(self.settings.ship.image)
@@ -61,7 +62,7 @@ class Ship:
 
     def center_ship(self):
         """Center the ship on the screen."""
-        self.rect.midbottom = self.screen_rect.midbottom
+        self.rect.midbottom = self.bottom_bar.rect.midtop
         self.x = float(self.rect.x)
 
 
