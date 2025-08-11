@@ -12,4 +12,5 @@ class Stats:
         self.ships_left = self.settings.ship.limit
         self.score = 0
         self.level = 1
+        self.high_score = 0
 
