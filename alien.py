@@ -65,6 +65,11 @@ class AlienFleet(Sprite):
         self.settings.alien.direction *= -1
 
 
+    def is_empty(self):
+        """Check if the fleet is empty."""
+        return len(self.aliens) == 0
+
+
 class Alien(Sprite):
     """Alien object."""
 

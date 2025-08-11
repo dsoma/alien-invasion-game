@@ -10,6 +10,7 @@ class BulletGroup(Sprite):
         super().__init__()
         self.game = game
         self.bullets = pygame.sprite.Group()
+        self.bullet_settings = self.game.settings.bullet
 
 
     def fire(self):
@@ -28,11 +29,22 @@ class BulletGroup(Sprite):
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
+        alien_group = self.game.aliens
+        collisions = pygame.sprite.groupcollide(self.bullets,
+                                                alien_group.aliens,
+                                                not self.bullet_settings.pass_through,
+                                                True)
+
 
     def draw(self):
         """Draw the bullets."""
         for bullet in self.bullets.sprites():
             bullet.draw()
+
+
+    def clear(self):
+        """Clear the bullets."""
+        self.bullets.empty()
 
 
 

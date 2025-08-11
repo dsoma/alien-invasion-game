@@ -27,6 +27,7 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()
             self.bullets.update()
+            self._recreate_fleet_if_empty()
             self.aliens.update()
             self._render_screen()
             self.clock.tick(self.settings.screen.framerate)
@@ -92,6 +93,13 @@ class AlienInvasion:
     def _create_fleet(self):
         """Create the fleet of aliens."""
         self.aliens.build()
+
+
+    def _recreate_fleet_if_empty(self):
+        """Recreate the fleet if it is empty."""
+        if self.aliens.is_empty():
+            self.bullets.clear()
+            self._create_fleet()
 
 
 if __name__ == "__main__":
