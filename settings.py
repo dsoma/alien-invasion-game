@@ -4,10 +4,11 @@ class BulletSettings:
     def __init__(self):
         """Initialize the bullet settings."""
         self.speed  = 10
-        self.width  = 3
+        self.width  = 30
         self.height = 15
         self.color  = (60, 60, 60)
-        self.max_bullets = 10
+        self.max_bullets = 2
+        self.pass_through = True
 
 
 class ShipSettings:
