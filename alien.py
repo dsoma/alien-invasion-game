@@ -11,6 +11,7 @@ class AlienFleet(Sprite):
         self.screen = game.screen
         self.settings = game.settings
         self.aliens = pygame.sprite.Group()
+        self.ship = game.ship
         self.screen_width  = self.screen.get_rect().width
         self.screen_height = self.screen.get_rect().height
 
@@ -48,6 +49,13 @@ class AlienFleet(Sprite):
         """Update the alien's position."""
         self._check_fleet_edges()
         self.aliens.update()
+        self._check_if_hit_ship()
+        self._did_aliens_reach_bottom(self.screen.get_rect())
+
+
+    def clear(self):
+        """Clear the aliens."""
+        self.aliens.empty()
 
 
     def _check_fleet_edges(self):
@@ -68,6 +76,20 @@ class AlienFleet(Sprite):
     def is_empty(self):
         """Check if the fleet is empty."""
         return len(self.aliens) == 0
+
+
+
+    def _check_if_hit_ship(self):
+        """Check for collisions between aliens and ship."""
+        if pygame.sprite.spritecollideany(self.ship, self.aliens):
+            self.game.ship_hit()
+
+
+    def _did_aliens_reach_bottom(self, screen_rect):
+        """Did the aliens in the group reached the bottom of the screen"""
+        for alien in self.aliens.sprites():
+            if alien.rect.bottom >= screen_rect.bottom:
+                self.game.aliens_hit_bottom()
 
 
 class Alien(Sprite):

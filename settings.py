@@ -18,6 +18,7 @@ class ShipSettings:
         """Initialize the ship settings."""
         self.speed = 2.5
         self.step_size = 3
+        self.limit = 3
         self.image = 'images/ship_sky_blue.bmp'
 
 
@@ -40,7 +41,7 @@ class AlienSettings:
         self.speed = 1.0
         self.direction = 1 # 1 means right; -1 means left
         self.image = 'images/alien_1.bmp'
-        self.drop_speed = 1.0
+        self.drop_speed = 50.0
 
 
 class Settings:

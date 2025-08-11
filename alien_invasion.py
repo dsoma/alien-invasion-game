@@ -1,10 +1,12 @@
 import sys
 import pygame
+from time import sleep
 
 from settings import Settings
 from ship import Ship
 from bullet import BulletGroup
 from alien import AlienFleet
+from stats import Stats
 
 class AlienInvasion:
     """Overall class to manage game assets and behavior."""
@@ -12,9 +14,11 @@ class AlienInvasion:
     def __init__(self):
         """Game creation and initialization."""
         pygame.init()
+        self.game_over = False
         self.clock = pygame.time.Clock()
         self.settings = Settings()
         self._create_fullscreen_window()
+        self.stats = Stats(self)
         self.ship = Ship(self)
         self.bullets = BulletGroup(self)
         self.aliens = AlienFleet(self)
@@ -25,10 +29,13 @@ class AlienInvasion:
         """Start the main executor for the game."""
         while True:
             self._check_events()
-            self.ship.update()
-            self.bullets.update()
-            self._recreate_fleet_if_empty()
-            self.aliens.update()
+
+            if not self.game_over:
+                self.ship.update()
+                self.bullets.update()
+                self._recreate_fleet_if_empty()
+                self.aliens.update()
+
             self._render_screen()
             self.clock.tick(self.settings.screen.framerate)
 
@@ -100,6 +107,31 @@ class AlienInvasion:
         if self.aliens.is_empty():
             self.bullets.clear()
             self._create_fleet()
+
+
+    def ship_hit(self):
+        """Respond to the ship being hit by an alien."""
+        self.stats.ships_left -= 1
+
+        if self.stats.ships_left > 0:
+            self.bullets.clear()
+            self.aliens.clear()
+
+            # Create a new fleet and center the ship.
+            self._create_fleet()
+            self.ship.center_ship()
+
+            sleep(1.0)
+
+        else:
+            self.game_over = True
+
+
+
+    def aliens_hit_bottom(self):
+        """One of the aliens has reached the bottom of the screen."""
+        # The game behavior is same as when the ship is hit by an alien.
+        self.ship_hit()
 
 
 if __name__ == "__main__":
