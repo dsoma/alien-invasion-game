@@ -188,7 +188,7 @@ class AlienInvasion:
         """Level up the settings."""
         # Increase the level and the game speed.
         self.stats.level += 1
-        self.settings.level_up(self.stats.level)
+        self.settings.level_up(self.stats.level, self.stats)
 
 
     def game_over(self):
