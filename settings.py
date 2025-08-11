@@ -7,7 +7,7 @@ class BulletSettings:
         self.width  = 3
         self.height = 15
         self.color  = (60, 60, 60)
-        self.max_bullets = 4
+        self.max_bullets = 10
 
 
 class ShipSettings:
@@ -38,7 +38,7 @@ class AlienSettings:
         """Initialize the alien settings."""
         self.speed = 1.0
         self.direction = 1
-        self.image = 'images/alien_red.bmp'
+        self.image = 'images/alien_1.bmp'
 
 
 class Settings:
