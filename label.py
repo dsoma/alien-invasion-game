@@ -3,13 +3,13 @@ import pygame.font
 class Label:
     """A label for the game."""
 
-    def __init__(self, screen, msg, bg_color, left_x, center_y):
+    def __init__(self, screen, msg, bg_color, width, left_x, center_y):
         """Initialize label attributes."""
         self.screen = screen
         self.screen_rect = self.screen.get_rect()
 
         # Set the dimensions and properties of the label.
-        self.width, self.height = 300, 50
+        self.width, self.height = width, 50
         self.bg_color = bg_color
         self.text_color = (255, 255, 255)
         self.font = pygame.font.SysFont(None, 36)

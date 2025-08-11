@@ -17,6 +17,7 @@ class BulletGroup(Sprite):
         """Add a bullet to the group and fire it."""
         if len(self.bullets) < self.game.settings.bullet.max_bullets:
             self.bullets.add( Bullet(self.game) )
+            self.game.stats.add_score(self.game.settings.bullet.points)
 
 
     def update(self):
@@ -34,6 +35,9 @@ class BulletGroup(Sprite):
                                                 alien_group.aliens,
                                                 not self.bullet_settings.pass_through,
                                                 True)
+        for entry in collisions.items():
+            bullet, alien = entry
+            self.game.stats.add_score(len(alien) * self.game.settings.alien.points)
 
 
     def draw(self):

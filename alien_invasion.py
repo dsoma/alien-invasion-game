@@ -9,6 +9,8 @@ from alien import AlienFleet
 from stats import Stats
 from button import Button
 from bottom_bar import BottomBar
+from label import Label
+from pre_game_screen import PreGameScreen
 
 class AlienInvasion:
     """Overall class to manage game assets and behavior."""
@@ -17,12 +19,13 @@ class AlienInvasion:
         """Game creation and initialization."""
         pygame.init()
         self.game_in_progress = False
+        self.game_lost = False
         self.clock = pygame.time.Clock()
         self.settings = Settings()
         self.stats = Stats(self)
         self._create_fullscreen_window()
         self.bottom_bar = BottomBar(self)
-        self.play_button = Button(self, "Play")
+        self.pre_game_screen = PreGameScreen(self)
         self.ship = Ship(self)
         self.bullets = BulletGroup(self)
         self.aliens = AlienFleet(self)
@@ -81,7 +84,7 @@ class AlienInvasion:
         self.screen.fill(self.settings.screen.bg_color)
 
         if not self.game_in_progress:
-            self.play_button.draw()
+            self.pre_game_screen.draw()
         else:
             self.ship.draw()
             self.bullets.draw()
@@ -115,7 +118,7 @@ class AlienInvasion:
 
     def _check_play_button(self, mouse_pos):
         """Start a new game when the player clicks Play."""
-        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        button_clicked = self.pre_game_screen.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.game_in_progress:
             self._start_game()
 
@@ -125,6 +128,7 @@ class AlienInvasion:
         self.stats.reset_stats()
         self.settings.reset_settings()
         self.game_in_progress = True
+        self.game_lost = False
         self.aliens.clear()
         self.bullets.clear()
         self._create_fleet()
@@ -140,6 +144,10 @@ class AlienInvasion:
         if self.aliens.is_empty():
             self._level_up_settings()
             self._recreate_fleet_if_empty()
+        else:
+            self.stats.update_count += 1
+            if self.stats.update_count % 20 == 0:
+                self.stats.add_score(self.settings.time_penalty)
 
     def _create_fleet(self):
         """Create the fleet of aliens."""
@@ -186,6 +194,8 @@ class AlienInvasion:
     def game_over(self):
         """Game over."""
         self.game_in_progress = False
+        self.game_lost = True
+        self.stats.game_over()
         pygame.mouse.set_visible(True)
 
 
