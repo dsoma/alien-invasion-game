@@ -79,7 +79,7 @@ class Settings:
         self.alien.points = 10
         self.bullet.points = -1
 
-    def level_up(self, level):
+    def level_up(self, level, stats):
         """Level up the settings."""
 
         # Increase the level and the game speed.
@@ -117,6 +117,6 @@ class Settings:
                     drop_speed={self.alien.drop_speed}""")
         print(f"""  Ship:
                     speed={self.ship.speed}""")
-        print(f"Current score: {self.stats.score}")
-        print(f"Current high score: {self.stats.high_score}")
+        print(f"Current score: {stats.score}")
+        print(f"Current high score: {stats.high_score}")
         print("--------------------------------")

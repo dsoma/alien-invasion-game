@@ -25,7 +25,6 @@ class Stats:
     def game_over(self):
         """Game over."""
         self.high_score = max(self.high_score, self.score)
-        self.score = 0
         self.level = 1
         self.ships_left = self.settings.ship.limit
 
