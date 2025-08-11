@@ -16,9 +16,7 @@ class Ship:
         self.height = self.rect.height
 
         # Place the ship at the bottom center of the screen
-        self.rect.midbottom = self.screen_rect.midbottom
-
-        self.x = float(self.rect.x)
+        self.center_ship()
 
         self.moving_right = False
         self.moving_left  = False
@@ -60,5 +58,15 @@ class Ship:
         """Ship stopped moving left."""
         self.moving_left = False
 
+
+    def center_ship(self):
+        """Center the ship on the screen."""
+        self.rect.midbottom = self.screen_rect.midbottom
+        self.x = float(self.rect.x)
+
+
+    def hit(self):
+        """Ship hit by an alien."""
+        print("Ship hit by an alien.")
 
 
