@@ -44,6 +44,27 @@ class AlienFleet(Sprite):
         self.aliens.draw(self.screen)
 
 
+    def update(self):
+        """Update the alien's position."""
+        self._check_fleet_edges()
+        self.aliens.update()
+
+
+    def _check_fleet_edges(self):
+        """Check if any aliens have reached the edge of the screen."""
+        for alien in self.aliens.sprites():
+            if alien.check_edges():
+                self._change_fleet_direction()
+                break
+
+
+    def _change_fleet_direction(self):
+        """Change the fleet's direction."""
+        for alien in self.aliens.sprites():
+            alien.rect.y += self.settings.alien.drop_speed
+        self.settings.alien.direction *= -1
+
+
 class Alien(Sprite):
     """Alien object."""
 
@@ -61,3 +82,16 @@ class Alien(Sprite):
 
         self.x = float(self.rect.x)
         self.y = float(self.rect.y)
+
+
+    def check_edges(self):
+        """Check if the alien is at the edge of the screen."""
+        screen_rect = self.game.screen.get_rect()
+        return (self.rect.right >= screen_rect.right or self.rect.left <= 0)
+
+
+
+    def update(self):
+        """Update the alien's position."""
+        self.x += self.settings.alien.speed * self.settings.alien.direction
+        self.rect.x = self.x

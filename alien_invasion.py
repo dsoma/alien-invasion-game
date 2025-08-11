@@ -27,6 +27,7 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()
             self.bullets.update()
+            self.aliens.update()
             self._render_screen()
             self.clock.tick(self.settings.screen.framerate)
 
